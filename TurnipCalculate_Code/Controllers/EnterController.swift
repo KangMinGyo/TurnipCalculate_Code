@@ -211,7 +211,7 @@ class EnterController: UIViewController {
         view.addSubview(sunView)
         sunView.translatesAutoresizingMaskIntoConstraints = false
         sunView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        sunView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+        sunView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         sunView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         sunView.widthAnchor.constraint(equalToConstant: 350).isActive = true
         

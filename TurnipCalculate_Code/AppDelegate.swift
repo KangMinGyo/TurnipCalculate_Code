@@ -6,14 +6,27 @@
 //
 
 import UIKit
+import AppTrackingTransparency
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        //App Tracking Transparency
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if #available(iOS 14, *) {
+                ATTrackingManager.requestTrackingAuthorization { status in
+                    switch status {
+                    case .authorized:
+                        print("enable tracking")
+                    case .denied:
+                        print("disable tracking")
+                    default:
+                        print("disable tracking")
+                    }
+                }
+            }
+        }
         return true
     }
 
