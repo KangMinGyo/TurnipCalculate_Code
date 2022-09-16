@@ -1,0 +1,6 @@
+framework module Pods_TurnipCalculate_Code {
+  umbrella header "Pods-TurnipCalculate_Code-umbrella.h"
+
+  export *
+  module * { export * }
+}

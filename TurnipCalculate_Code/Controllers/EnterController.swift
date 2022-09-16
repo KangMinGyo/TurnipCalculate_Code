@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class EnterController: UIViewController {
     
@@ -176,7 +177,13 @@ class EnterController: UIViewController {
         button.backgroundColor = .systemBackground
         button.layer.cornerRadius = 15
         button.setTitle("이번주 무 값은?", for: UIControl.State.normal)
+        button.addTarget(self, action: #selector(nextView), for: .touchUpInside)
         return button
+    }()
+    
+    lazy var bannerView: GADBannerView = {
+        let banner = GADBannerView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        return banner
     }()
         
     // MARK: Life Cycle
@@ -198,13 +205,69 @@ class EnterController: UIViewController {
             self.pmStackView.addArrangedSubview($0)
         }
         
+        //배너 사이즈 설정
+        bannerView = GADBannerView(adSize: GADAdSizeBanner)
+        bannerView.adUnitID = "ca-app-pub-2824710392054396/7944605171"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        bannerView.delegate = self
+        
         configure()
+        update()
     }
     
     // MARK: Button Event
     @objc func buttonPressend(_sender: Any) {
         //초기화 해주기
-        print("Button Cliked")
+        sunTextField.text = ""
+        monAmTextField.text = ""
+        monPmTextField.text = ""
+        tueAmTextField.text = ""
+        tuePmTextField.text = ""
+        wenAmTextField.text = ""
+        wenPmTextField.text = ""
+        thuAmTextField.text = ""
+        thuPmTextField.text = ""
+        friAmTextField.text = ""
+        friPmTextField.text = ""
+        satAmTextField.text = ""
+        satPmTextField.text = ""
+    }
+    
+    @objc func nextView() {
+        let nextVC = CalculateController()
+        self.show(nextVC, sender: self)
+        
+        UserDefaults.standard.set(sunTextField.text, forKey: "sunday")
+        UserDefaults.standard.set(monAmTextField.text, forKey: "monAM")
+        UserDefaults.standard.set(monPmTextField.text, forKey: "monPM")
+        UserDefaults.standard.set(tueAmTextField.text, forKey: "tueAM")
+        UserDefaults.standard.set(tuePmTextField.text, forKey: "tuePM")
+        UserDefaults.standard.set(wenAmTextField.text, forKey: "wenAM")
+        UserDefaults.standard.set(wenPmTextField.text, forKey: "wenPM")
+        UserDefaults.standard.set(thuAmTextField.text, forKey: "thuAM")
+        UserDefaults.standard.set(thuPmTextField.text, forKey: "thuPM")
+        UserDefaults.standard.set(friAmTextField.text, forKey: "friAM")
+        UserDefaults.standard.set(friPmTextField.text, forKey: "friPM")
+        UserDefaults.standard.set(satAmTextField.text, forKey: "satAM")
+        UserDefaults.standard.set(satPmTextField.text, forKey: "satPM")
+        
+    }
+    
+    func update() {
+        sunTextField.text = UserDefaults.standard.object(forKey: "sunday") as? String
+        monAmTextField.text = UserDefaults.standard.object(forKey: "monAM") as? String
+        monPmTextField.text = UserDefaults.standard.object(forKey: "monPM") as? String
+        tueAmTextField.text = UserDefaults.standard.object(forKey: "tueAM") as? String
+        tuePmTextField.text = UserDefaults.standard.object(forKey: "tuePM") as? String
+        wenAmTextField.text = UserDefaults.standard.object(forKey: "wenAM") as? String
+        wenPmTextField.text = UserDefaults.standard.object(forKey: "wenPM") as? String
+        thuAmTextField.text = UserDefaults.standard.object(forKey: "thuAM") as? String
+        thuPmTextField.text = UserDefaults.standard.object(forKey: "thuPM") as? String
+        friAmTextField.text = UserDefaults.standard.object(forKey: "friAM") as? String
+        friPmTextField.text = UserDefaults.standard.object(forKey: "friPM") as? String
+        satAmTextField.text = UserDefaults.standard.object(forKey: "satAM") as? String
+        satPmTextField.text = UserDefaults.standard.object(forKey: "satPM") as? String
     }
     
     func configure() {
@@ -230,7 +293,7 @@ class EnterController: UIViewController {
         view.addSubview(restView)
         restView.translatesAutoresizingMaskIntoConstraints = false
         restView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        restView.topAnchor.constraint(equalTo: sunView.bottomAnchor, constant: 20).isActive = true
+        restView.topAnchor.constraint(equalTo: sunView.bottomAnchor, constant: 10).isActive = true
         restView.heightAnchor.constraint(equalToConstant: 500).isActive = true
         restView.widthAnchor.constraint(equalToConstant: 350).isActive = true
         
@@ -249,13 +312,44 @@ class EnterController: UIViewController {
         pmStackView.centerYAnchor.constraint(equalTo: restView.centerYAnchor).isActive = true
         pmStackView.leadingAnchor.constraint(equalTo: amStackView.trailingAnchor, constant: 10).isActive = true
         
-        
         view.addSubview(calculateButton)
         calculateButton.translatesAutoresizingMaskIntoConstraints = false
         calculateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        calculateButton.topAnchor.constraint(equalTo: restView.bottomAnchor, constant: 20).isActive = true
+        calculateButton.topAnchor.constraint(equalTo: restView.bottomAnchor, constant: 10).isActive = true
         calculateButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         calculateButton.widthAnchor.constraint(equalToConstant: 350).isActive = true
         
+        view.addSubview(bannerView)
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        bannerView.topAnchor.constraint(equalTo: calculateButton.bottomAnchor).isActive = true
+        
+    }
+}
+
+extension EnterController: GADBannerViewDelegate {
+    
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+      print("bannerViewDidReceiveAd")
+    }
+
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+      print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+
+    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+      print("bannerViewDidRecordImpression")
+    }
+
+    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+      print("bannerViewWillPresentScreen")
+    }
+
+    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+      print("bannerViewWillDIsmissScreen")
+    }
+
+    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+      print("bannerViewDidDismissScreen")
     }
 }
