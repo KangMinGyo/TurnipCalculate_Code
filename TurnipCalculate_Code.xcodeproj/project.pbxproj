@@ -16,6 +16,7 @@
 		8C23C4AA28D493F7008DF3C6 /* EnterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C4A928D493F7008DF3C6 /* EnterController.swift */; };
 		8C23C4AD28D4B0CE008DF3C6 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C4AC28D4B0CE008DF3C6 /* Extension.swift */; };
 		8C23C4AF28D4B88F008DF3C6 /* CalculateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C4AE28D4B88F008DF3C6 /* CalculateController.swift */; };
+		8C23C4B228D4C985008DF3C6 /* Turnip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23C4B128D4C985008DF3C6 /* Turnip.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		8C23C4A928D493F7008DF3C6 /* EnterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterController.swift; sourceTree = "<group>"; };
 		8C23C4AC28D4B0CE008DF3C6 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		8C23C4AE28D4B88F008DF3C6 /* CalculateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateController.swift; sourceTree = "<group>"; };
+		8C23C4B128D4C985008DF3C6 /* Turnip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Turnip.swift; sourceTree = "<group>"; };
 		C83E5515F17E7A54CCC760E8 /* Pods-TurnipCalculate_Code.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TurnipCalculate_Code.release.xcconfig"; path = "Target Support Files/Pods-TurnipCalculate_Code/Pods-TurnipCalculate_Code.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +77,7 @@
 		8C23C49328D48F16008DF3C6 /* TurnipCalculate_Code */ = {
 			isa = PBXGroup;
 			children = (
+				8C23C4B028D4C956008DF3C6 /* Model */,
 				8C23C4AB28D4B0B1008DF3C6 /* Extensions */,
 				8C23C4A828D49389008DF3C6 /* Controllers */,
 				8C23C49428D48F16008DF3C6 /* AppDelegate.swift */,
@@ -102,6 +105,14 @@
 				8C23C4AC28D4B0CE008DF3C6 /* Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8C23C4B028D4C956008DF3C6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8C23C4B128D4C985008DF3C6 /* Turnip.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		EFFB45A9BCE68AD0AC17457A /* Pods */ = {
@@ -231,6 +242,7 @@
 				8C23C49528D48F16008DF3C6 /* AppDelegate.swift in Sources */,
 				8C23C4AA28D493F7008DF3C6 /* EnterController.swift in Sources */,
 				8C23C4AF28D4B88F008DF3C6 /* CalculateController.swift in Sources */,
+				8C23C4B228D4C985008DF3C6 /* Turnip.swift in Sources */,
 				8C23C49728D48F16008DF3C6 /* SceneDelegate.swift in Sources */,
 				8C23C4AD28D4B0CE008DF3C6 /* Extension.swift in Sources */,
 			);
