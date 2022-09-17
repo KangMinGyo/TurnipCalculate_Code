@@ -13,3 +13,4 @@ struct Turnip: Codable {
     let minMaxPattern: [[Int]]
     let avgPattern: [Int]
 }
+
