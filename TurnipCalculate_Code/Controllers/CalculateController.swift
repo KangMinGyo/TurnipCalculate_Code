@@ -6,6 +6,8 @@
 //
 
 import UIKit
+//import Charts
+import GoogleMobileAds
 
 class CalculateController: UIViewController {
 
@@ -27,12 +29,19 @@ class CalculateController: UIViewController {
     var satAM: String?
     var satPM: String?
     
+    
+//    lazy var bannerView: GADBannerView = {
+//        let banner = GADBannerView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+//        return banner
+//    }()
+    
     //MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         getTurnip()
         getData()
+//        configure()
         print(sunPrice!)
     }
     
@@ -69,6 +78,13 @@ class CalculateController: UIViewController {
                 print("error")
             }
         }
+    }
+    
+    func configure() {
+//        view.addSubview(bannerView)
+//        bannerView.translatesAutoresizingMaskIntoConstraints = false
+//        bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
     }
 }
 
