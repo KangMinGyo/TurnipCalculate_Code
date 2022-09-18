@@ -6,10 +6,14 @@
 //
 
 import UIKit
-//import Charts
+import Charts
 import GoogleMobileAds
 
-class CalculateController: UIViewController {
+class CalculateController: UIViewController, ChartViewDelegate {
+    
+    var lineChart = LineChartView()
+    
+    var days: [String] = []
 
     var minmaxPattern = [[Int]]()
     var minPattern = [Int]()
@@ -39,11 +43,18 @@ class CalculateController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        
+        lineChart.delegate = self
+        
         getTurnip()
         getData()
-//        configure()
-        print(sunPrice!)
+        days = ["월AM", "월PM", "화AM", "화PM", "수AM", "수PM", "목AM", "목PM", "금AM", "금PM", "토AM", "토PM"]
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        chartData()
+    }
+
     
     func getTurnip() {
         sunPrice = UserDefaults.standard.object(forKey: "sunday") as? String
@@ -71,8 +82,6 @@ class CalculateController: UIViewController {
                         self.minPattern.append(value[0])
                         self.maxPattern.append(value[1])
                     }
-//                    print(self.minPattern)
-//                    print(self.maxPattern)
                 }
             case .failure(_):
                 print("error")
@@ -80,11 +89,58 @@ class CalculateController: UIViewController {
         }
     }
     
-    func configure() {
-//        view.addSubview(bannerView)
-//        bannerView.translatesAutoresizingMaskIntoConstraints = false
-//        bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+    func chartData() {
+        lineChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height / 3)
+        lineChart.center = view.center
+        view.addSubview(lineChart)
+        var minLineDataEntries = [ChartDataEntry]()
+        var maxLineDataEntries = [ChartDataEntry]()
+        
+        print("여기")
+        print(self.minPattern)
+        
+
+        for i in 0..<days.count {
+            let minLineDataEntry = ChartDataEntry(x: Double(i), y: Double(minPattern[i]))
+            let maxLineDataEntry = ChartDataEntry(x: Double(i), y: Double(maxPattern[i]))
+
+            minLineDataEntries.append(minLineDataEntry)
+            maxLineDataEntries.append(maxLineDataEntry)
+        }
+
+        let minset = LineChartDataSet(entries: minLineDataEntries, label: "최소값(min)")
+        let maxset = LineChartDataSet(entries: maxLineDataEntries, label: "최대값(max)")
+        
+        minset.colors = [.red]
+        maxset.colors = [.blue]
+        
+        let data = LineChartData(dataSets: [minset, maxset])
+        lineChart.data = data
+        
+        //x축 레이블
+        lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: days)
+        lineChart.xAxis.setLabelCount(days.count, force: true)
+        lineChart.xAxis.labelPosition = .bottom
+        lineChart.xAxis.labelFont = UIFont.systemFont(ofSize: 7)
+        
+        // 오른쪽 레이블 제거
+        lineChart.rightAxis.enabled = false
+        
+        // 선택 안되게
+        minset.highlightEnabled = false
+        maxset.highlightEnabled = false
+            
+        // 줌 안되게
+        lineChart.doubleTapToZoomEnabled = false
+        
+        //원 색, 크기
+        minset.circleRadius = 3.0
+        maxset.circleRadius = 3.0
+        minset.circleHoleRadius = 3.0
+        maxset.circleHoleRadius = 3.0
+        minset.circleColors = [.gray]
+        maxset.circleColors = [.gray]
     }
+    
 }
 
